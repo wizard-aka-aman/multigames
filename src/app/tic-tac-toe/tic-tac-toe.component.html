@@ -1,1 +1,41 @@
-<p>tic-tac-toe works!</p>
+<div class="body">
+  <div
+    class="csontainer d-flex flex-column justify-content-center align-items-center"
+    style="height: 100vh"
+  >
+    <h1 class="fs-1 text-light">Tic Tac Toe</h1>
+    <div class="message" id="message">{{ message }}</div>
+    <div class="board" id="board">
+      <div
+        class="cell"
+        *ngFor="let cell of boardState; let i = index"
+        [ngClass]="winningCell?.includes(i)? 'winning-cell' :'' "
+        [ngStyle]="{ 'color': isTie ? 'red' : '' }"
+        (click)="makeMove(i)"
+      >
+        {{ cell }}
+      </div>
+    </div>
+    <button class="reset" (click)="resetGame()">Reset Game</button>
+  </div>
+</div>
+
+<div
+  class="modal fade show d-block"
+  *ngIf="toSelect"
+  id="staticBackdrop"
+  tabindex="-1"
+  style="background: rgba(0, 0, 0, 0.5)"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Choose btw computer vs users</h1>
+      </div>
+      <div class="modal-body d-flex justify-content-around">
+        <div class="btn btn-secondary" (click)="twoPlayer()">Two Player</div>
+        <div class="btn btn-secondary" (click)="computer()">Vs Computer</div>
+      </div>
+    </div>
+  </div>
+</div>
