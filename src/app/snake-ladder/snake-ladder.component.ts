@@ -58,6 +58,11 @@ export class SnakeLadderComponent {
       this.board.unshift(this.arr);
     }
     console.log(this.board);
+    for (let index = 0; index < this.board.length; index++) {
+     console.log(this.board[index]);
+     
+      
+    }
   }
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
