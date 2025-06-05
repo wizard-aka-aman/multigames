@@ -1,41 +1,91 @@
-<div class="body">
+<div class="body bg-gradient">
   <div
-    class="csontainer d-flex flex-column justify-content-center align-items-center"
-    style="height: 100vh"
+    class="container-fluid d-flex flex-column flex-lg-row justify-content-center align-items-center gap-4 py-5"
+    style="min-height: 100vh"
   >
-    <h1 class="fs-1 text-light">Tic Tac Toe</h1>
-    <div class="message" id="message">{{ message }}</div>
-    <div class="board" id="board">
-      <div
-        class="cell"
-        *ngFor="let cell of boardState; let i = index"
-        [ngClass]="winningCell?.includes(i)? 'winning-cell' :'' "
-        [ngStyle]="{ 'color': isTie ? 'red' : '' }"
-        (click)="makeMove(i)"
-      >
-        {{ cell }}
-      </div>
-    </div>
-    <button class="reset" (click)="resetGame()">Reset Game</button>
+    <!-- Scoreboard -->
+  <div
+  class="scoreboard bg-dark text-light p-4 rounded-4 shadow-lg border border-warning text-center"
+  style="min-width: 250px; margin: 50px; width: 90%; max-width: 300px;"
+>
+  <h4 class="mb-4 text-warning">🏆 Scoreboard</h4>
+  <div class="d-flex justify-content-between mb-3">
+    <span>Player X Wins:</span>
+    <strong class="text-success">{{ numberOfXWins }}</strong>
+  </div>
+  <div class="d-flex justify-content-between mb-3">
+    <span>Player O Wins:</span>
+    <strong class="text-primary">{{ numberOfOWins }}</strong>
+  </div>
+  <div class="d-flex justify-content-between mb-3">
+    <span>Ties:</span>
+    <strong class="text-danger">{{ numberOfTies }}</strong>
+  </div>
+  <div class="d-flex justify-content-between">
+    <span>Total Rounds:</span>
+    <strong class="text-warning">{{ numberOfRounds }}</strong>
   </div>
 </div>
 
-<div
-  class="modal fade show d-block"
-  *ngIf="toSelect"
-  id="staticBackdrop"
-  tabindex="-1"
-  style="background: rgba(0, 0, 0, 0.5)"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5">Choose btw computer vs users</h1>
+
+    <!-- Game Area -->
+    <div class="game-area d-flex flex-column align-items-center">
+      <h2 class="text-light mb-3">{{ message || 'Your Move!' }}</h2>
+
+      <!-- Game Board -->
+      <div class="board" id="board">
+        <div
+          class="cell"
+          *ngFor="let cell of boardState; let i = index"
+          [ngClass]="winningCell?.includes(i) ? 'winning-cell' : ''"
+          [ngStyle]="{ color: isTie ? 'red' : '' }"
+          (click)="makeMove(i)"
+        >
+          {{ cell }}
+        </div>
       </div>
-      <div class="modal-body d-flex justify-content-around">
-        <div class="btn btn-secondary" (click)="twoPlayer()">Two Player</div>
-        <div class="btn btn-secondary" (click)="computer()">Vs Computer</div>
+
+      <div class="">
+        <button class="reset btn btn-warning m-4 px-4" (click)="PlayAgain()">
+        Play Again
+      </button>
+      <button class="reset btn btn-warning m-4 px-4" (click)="resetGame()">
+        Reset Game
+      </button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Game Mode Selection Modal -->
+<!-- Select Game Mode Modal -->
+<div
+  class="modal fade show d-block"
+  *ngIf="toSelect"
+  id="gameModeModal"
+  tabindex="-1"
+  style="background-color: rgba(0, 0, 0, 0.6)"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white border-0 rounded-4 shadow-lg">
+      <div class="modal-header border-0">
+        <h4 class="modal-title w-100 text-center">🎮 Select Game Mode</h4>
+      </div>
+      <div class="modal-body d-flex flex-column gap-3 align-items-center">
+        <button
+          class="btn btn-outline-light px-4 py-2 w-75 rounded-pill fs-5"
+          (click)="twoPlayer()"
+        >
+          👥 Two Players
+        </button>
+        <button
+          class="btn btn-warning text-dark px-4 py-2 w-75 rounded-pill fs-5"
+          (click)="computer()"
+        >
+          🤖 Vs Computer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

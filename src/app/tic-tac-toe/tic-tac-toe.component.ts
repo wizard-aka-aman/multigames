@@ -19,6 +19,10 @@ export class TicTacToeComponent {
   previousBoardState: any[] = [];
   isDisabled = false
   finalwinningCell: any;
+  numberOfXWins : number = 0
+  numberOfOWins : number = 0
+  numberOfTies : number = 0
+  numberOfRounds : number = 0
   makeMove(index: number) {
     if(this.isDisabled){
       return;
@@ -35,13 +39,16 @@ export class TicTacToeComponent {
         
         this.winningCell = this.finalwinningCell
         this.gameOver = true;
+        this.numberOfRounds += 1;
+        this.currentPlayer=="X"?this.numberOfXWins++:this.numberOfOWins++;
         return;
       }
       if (!this.boardState.includes("")) {
         this.message = "It's a tie!";
         this.gameOver = true;
         this.isTie = true;
-
+        this.numberOfRounds += 1;
+        this.numberOfTies++;
         return;
       }
       this.currentPlayer = this.currentPlayer === "X" ? "O" : "X";
@@ -107,13 +114,16 @@ export class TicTacToeComponent {
         this.message = `Computer wins!`;
         this.winningCell = this.finalwinningCell
         this.gameOver = true;
+        this.numberOfRounds += 1;
+           this.currentPlayer=="X"?this.numberOfXWins++:this.numberOfOWins++;
         return;
       }
       if (!this.boardState.includes("")) {
         this.message = "It's a tie!";
         this.gameOver = true;
         this.isTie = true;
-
+        this.numberOfTies++
+        this.numberOfRounds += 1;
         return;
       }
       this.currentPlayer = this.currentPlayer === "X" ? "O" : "X";
@@ -159,7 +169,7 @@ export class TicTacToeComponent {
 
 
 
-  resetGame() {
+  PlayAgain() {
     this.currentPlayer = "X";
     this.boardState = ["", "", "", "", "", "", "", "", ""];
     this.gameOver = false;
@@ -170,6 +180,14 @@ export class TicTacToeComponent {
     document.querySelectorAll(".cell").forEach((cell) => {
       cell.textContent = "";
     });
+  }
+  resetGame(){
+    this.PlayAgain();
+    this.toSelect = true;
+    this.numberOfOWins = 0;
+    this.numberOfXWins = 0;
+    this.numberOfTies =0 ;
+    this.numberOfRounds = 0;
   }
   computer() {
     this.toSelect = false
