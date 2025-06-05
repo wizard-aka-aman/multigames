@@ -1,0 +1,160 @@
+<div class="board">
+  <div
+    class="grid-container"
+    style="position: relative; top: 20px; width: 1500px"
+  >
+    <div class="grid-row" *ngFor="let row of board">
+      <div class="grid-item" *ngFor="let cell of row">
+        <ng-container *ngIf="cell == player1">
+          <div class="player-coin1 fs-4">P1</div>
+        </ng-container>
+        <ng-container *ngIf="cell == player2">
+          <div class="player-coin2 fs-4">P2</div>
+        </ng-container>
+
+        {{ cell }}
+      </div>
+    </div>
+    <!-- Ladder image overlayed on top of the grid -->
+    <img src="../../assets/ladder.png" class="ladder-img1" />
+    <img src="../../assets/ladder.png" class="ladder-img2" />
+    <img src="../../assets/ladder.png" class="ladder-img3" />
+    <img src="../../assets/ladder.png" class="ladder-img4" />
+    <img src="../../assets/ladder.png" class="ladder-img5" />
+    <img src="../../assets/ladder.png" class="ladder-img6" />
+    <img src="../../assets/ladder.png" class="ladder-img7" />
+    <img src="../../assets/ladder.png" class="ladder-img8" />
+    <img src="../../assets/dc76Xoedi-removebg-preview.png" class="snake-img1" />
+    <img src="../../assets/dc76Xoedi-removebg-preview.png" class="snake-img2" />
+    <img src="../../assets/dc76Xoedi-removebg-preview.png" class="snake-img3" />
+    <img src="../../assets/dc76Xoedi-removebg-preview.png" class="snake-img4" />
+    <img src="../../assets/dc76Xoedi-removebg-preview.png" class="snake-img5" />
+    <img src="../../assets/dc76Xoedi-removebg-preview.png" class="snake-img6" />
+    <img src="../../assets/dc76Xoedi-removebg-preview.png" class="snake-img7" />
+    <img src="../../assets/dc76Xoedi-removebg-preview.png" class="snake-img8" />
+    <img src="../../assets/dc76Xoedi-removebg-preview.png" class="snake-img9" />
+    <img
+      src="../../assets/dc76Xoedi-removebg-preview.png"
+      class="snake-img10"
+    />
+    <!-- <div class="player-coin1 fs-4" *ngIf="!player1">P1</div>
+  <div class="player-coin2 fs-4" *ngIf="!player2">P2</div> -->
+    <div
+      class="aa container"
+      style="position: absolute; top: 25%; right: 0; width: 400px"
+    >
+      <div class="row justify-content-center text-center">
+        <div class="col-md-6 mb-3" *ngIf="rollMessage">
+          <div class="alert alert-warning shadow-sm">
+            {{ rollMessage }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Player Turn Panel -->
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+          <div class="card shadow-sm border-0">
+            <div class="card-body">
+              @if(turn === '2' && isComputer){
+              <h4 class="mb-3">🎯 Computer's Turn</h4>
+              }@else{
+              <h4 class="mb-3">🎯 Player {{ turn }}'s Turn</h4>
+
+              }
+              <button
+                [disabled]="isPlayer1Disable"
+                class="btn btn-lg btn-primary w-100"
+                style="background-color: #ff6b00"
+                *ngIf="turn === '1'"
+                (click)="roll1()"
+              >
+                Roll Dice 🎲
+              </button>
+
+              <button
+                [disabled]="isPlayer2Disable"
+                class="btn btn-lg btn-secondary w-100"
+                style="background-color: #5f27cd"
+                *ngIf="turn === '2' && !isComputer"
+                (click)="roll2()"
+              >
+                Roll Dice 🎲
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--winner modal-->
+
+<div
+  class="modal fade show d-block"
+  *ngIf="winnerModalVisible"
+  tabindex="-1"
+  style="background: rgba(0, 0, 0, 0.7); z-index: 1055"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content text-center border-0 shadow-lg rounded-4">
+      <div class="modal-header bg-gradient-success text-white rounded-top-4">
+        <h5
+          class="modal-title text-dark w-100 d-flex align-items-center justify-content-center"
+        >
+          🎉 Game Over!
+        </h5>
+      </div>
+      <div class="modal-body px-5 py-4">
+        <div class="row justify-content-center">
+          <div *ngIf="player1 == 100">
+            <img
+              src="https://skribbl.io/img/trophy.gif"
+              class="ms-2"
+              style="width: 40px; height: 40px"
+            />
+            Player 1 Winner
+          </div>
+          <div *ngIf="player2 == 100">
+            <img
+              src="https://skribbl.io/img/trophy.gif"
+              class="ms-2"
+              style="width: 40px; height: 40px"
+            />
+            <div class="fs-3 fw-bold" *ngIf="isComputer">computer Winner</div>
+            <div class="" *ngIf="!isComputer">computer Winner</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center border-0">
+        <button
+          class="btn btn-outline-success px-4 fw-semibold"
+          (click)="close()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--vs-->
+<div
+  class="modal fade show d-block"
+  *ngIf="toSelect"
+  id="staticBackdrop"
+  tabindex="-1"
+  style="background: rgba(0, 0, 0, 0.5)"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Choose btw computer vs users</h1>
+      </div>
+      <div class="modal-body d-flex justify-content-around">
+        <div class="btn btn-secondary" (click)="twoPlayer()">Two Player</div>
+        <div class="btn btn-secondary" (click)="computer()">Vs Computer</div>
+      </div>
+    </div>
+  </div>
+</div>
