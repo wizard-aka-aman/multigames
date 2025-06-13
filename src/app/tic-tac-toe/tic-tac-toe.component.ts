@@ -195,6 +195,7 @@ export class TicTacToeComponent {
   }
   twoPlayer() {
     this.toSelect = false
+    this.isComputer = false
   }
 
 }
